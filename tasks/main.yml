@@ -1,13 +1,15 @@
 ---
 - name: Create security group with default ports
-  local_action:
-    module: ec2_group
+  ec2_group:
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
-    name: "{{ app_name }}-{{ server_env }}"
-    description: "Access to the {{ app_name }}-{{ server_env }} servers"
     vpc_id: "{{ aws_acct_vpc_id }}"
     region: "{{ aws_region }}"
+    name: "{{ aws_group }}"
+    description: "Security Group for the {{ aws_group }} servers"
+    state: present
+
+    # Inbound rules
     rules:
       - proto: tcp
         from_port: 22
@@ -21,8 +23,11 @@
         from_port: 80
         to_port: 80
         cidr_ip: 0.0.0.0/0
+
+    # Outbound rules
     rules_egress:
       - proto: all
         cidr_ip: 0.0.0.0/0
+
     purge_rules: no
     purge_rules_egress: no

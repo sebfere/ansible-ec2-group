@@ -3,5 +3,5 @@ aws_access_key: ""
 aws_secret_key: ""
 aws_acct_vpc_id: ""
 aws_region: ""
-app_name: test
-server_env: qa
+app_name: ""
+server_env: ""
